@@ -1,0 +1,90 @@
+type: edu
+custom_name: stage3
+files:
+- name: test/EncryptDecryptTest.java
+  visible: false
+  text: |
+    import encryptdecrypt.Main;
+    import org.hyperskill.hstest.v6.stage.BaseStageTest;
+    import org.hyperskill.hstest.v6.testcase.PredefinedIOTestCase;
+
+    import java.util.List;
+
+    public class EncryptDecryptTest extends BaseStageTest {
+        public EncryptDecryptTest() throws Exception {
+            super(Main.class);
+        }
+
+        @Override
+        public List<PredefinedIOTestCase> generate() {
+            return List.of(
+                new PredefinedIOTestCase(
+                    "enc\n" +
+                        "Welcome to hyperskill!\n" +
+                        "5",
+                    "\\jqhtrj%yt%m~ujwxpnqq&"),
+                new PredefinedIOTestCase(
+                    "enc\n" +
+                        "Hello\n" +
+                        "0",
+                    "Hello"),
+                new PredefinedIOTestCase(
+                    "enc\n" +
+                        "012345678\n" +
+                        "1",
+                    "123456789"),
+                new PredefinedIOTestCase(
+                    "dec\n" +
+                        "\\jqhtrj%yt%m~ujwxpnqq&\n" +
+                        "5",
+                    "Welcome to hyperskill!"),
+                new PredefinedIOTestCase(
+                    "dec\n" +
+                        "Hello\n" +
+                        "0",
+                    "Hello"),
+                new PredefinedIOTestCase(
+                    "dec\n" +
+                        "222233334444\n" +
+                        "1",
+                    "111122223333")
+            );
+        }
+    }
+  learner_created: false
+- name: src/encryptdecrypt/Main.java
+  visible: true
+  text: |
+    package encryptdecrypt;
+    import java.util.Scanner;
+    public class Main {
+        public static void main(String[] args) {
+            Scanner scan = new Scanner(System.in);
+            String str = scan.nextLine();
+            int offset = scan.nextInt();
+            String alphabet = "abcdefghijklmnopqrstuvwxyz";
+            String newAlphabet, newStr = "";
+
+            if (offset == 0) {
+                newAlphabet = alphabet;
+            } else {
+                newAlphabet = alphabet.substring(offset) +
+                        alphabet.substring(0, offset);
+            }
+
+            for (int i = 0; i < str.length(); i++) {
+                if (alphabet.contains(String.valueOf(str.charAt(i)))) {
+                    newStr += newAlphabet.charAt(alphabet.indexOf(String.valueOf(str.charAt(i))));
+                } else {
+                    newStr += str.charAt(i);
+                }
+
+            }
+
+            System.out.println(newStr);
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/46/stages/247/implement
+status: Unchecked
+record: 4
